@@ -1,0 +1,7 @@
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\bin\Debug\Zadatak_1.exe.config
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\bin\Debug\Zadatak_1.exe
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\bin\Debug\Zadatak_1.pdb
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\obj\Debug\Zadatak_1.csprojAssemblyReference.cache
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\obj\Debug\Zadatak_1.csproj.CoreCompileInputs.cache
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\obj\Debug\Zadatak_1.exe
+C:\Users\panonit\Desktop\DAN_XXXVII_Milana_Arnautovic\DAN_XXXVII_Milana_Arnautovic\Zadatak_1\obj\Debug\Zadatak_1.pdb
