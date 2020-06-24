@@ -37,6 +37,7 @@ namespace Zadatak_1
             lock (l)
             {
                 Monitor.Wait(l);
+                Thread.Sleep(500);
                 for (int i = 1; i <= 10; i++)
                 {
                     Thread t = new Thread(new ParameterizedThreadStart(Road)); //creating threads
