@@ -23,14 +23,11 @@ namespace Zadatak_1
         public static void LoadingTrucks()
 
         {
-            lock (l)
+
+            for (int i = 1; i <= 10; i++)
             {
-                for (int i = 1; i <= 10; i++)
-                {
-                    Thread t = new Thread(new ParameterizedThreadStart(Loading)); //creating threads
-                    t.Start(i); //starting threads
-                }
-                Monitor.Pulse(l);
+                Thread t = new Thread(new ParameterizedThreadStart(Loading)); //creating threads
+                t.Start(i); //starting threads
             }
 
         }
@@ -101,7 +98,7 @@ namespace Zadatak_1
                 {
                     best10.Add(best.ElementAt(i));
                 }
-                Console.WriteLine("The best routes are chosen.");
+                Console.WriteLine("The best routes are chosen.\nThe best routes are:");
                 foreach (var item in best10)
                 {
                     Console.WriteLine(item);
@@ -124,7 +121,7 @@ namespace Zadatak_1
             stopwatch.Start();
             Console.WriteLine("The truck {0} is loading", o);
             Thread.Sleep(random.Next(500, 5000));
-            Console.WriteLine("The truck {0} finished loading. Loading time: {1:N} seconds", o, stopwatch.Elapsed.TotalSeconds);
+            Console.WriteLine("The truck {0} finished loading. Loading time: {1:N3} seconds", o, stopwatch.Elapsed.TotalSeconds);
             stopwatch.Reset();
             Manager.Release(1);
 
@@ -161,7 +158,7 @@ namespace Zadatak_1
                     n, Thread.CurrentThread.Name);
                 stopwatch.Start();
                 Thread.Sleep(rnd);
-                Console.WriteLine("Truck {0} returning from failed road route: {2}. Road time: {1:N} seconds.",
+                Console.WriteLine("Truck {0} returning from failed road route: {2}. Road time: {1:N3} seconds.",
                     n, stopwatch.Elapsed.TotalSeconds, Thread.CurrentThread.Name);
                 stopwatch.Stop();
             }
@@ -169,15 +166,13 @@ namespace Zadatak_1
             {
                 stopwatch.Start();
                 Thread.Sleep(rnd);
-                Console.WriteLine("Truck {0} finishes road to route: {1}. Road time: {2:N} seconds.",
+                Console.WriteLine("Truck {0} finishes road to route: {1}. Road time: {2:N3} seconds.",
                     n, Thread.CurrentThread.Name, stopwatch.Elapsed.TotalSeconds);
 
                 stopwatch.Stop();
             }
 
         }
-
-
 
 
         static void Main(string[] args)
