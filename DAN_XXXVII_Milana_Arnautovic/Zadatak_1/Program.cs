@@ -12,15 +12,14 @@ namespace Zadatak_1
     class Program
     {
         public static Semaphore Manager { get; set; }
+        public static Semaphore Driver { get; set; }
         public static Random random = new Random();
         static object l = new object();
         static int[] arrayRnd;
         static List<int> best = new List<int>();
         static List<int> best10 = new List<int>();
-        public static Semaphore Driver { get; set; }
-        static int rnd;
 
-
+        
         public static void LoadingTrucks()
 
         {
@@ -28,8 +27,8 @@ namespace Zadatak_1
             {
                 for (int i = 1; i <= 10; i++)
                 {
-                    Thread t = new Thread(new ParameterizedThreadStart(Loading));
-                    t.Start(i);
+                    Thread t = new Thread(new ParameterizedThreadStart(Loading)); //creating threads
+                    t.Start(i); //starting threads
                 }
                 Monitor.Pulse(l);
             }
@@ -43,15 +42,17 @@ namespace Zadatak_1
                 Monitor.Wait(l);
                 for (int i = 1; i <= 10; i++)
                 {
-                    Thread t = new Thread(new ParameterizedThreadStart(Road));
+                    Thread t = new Thread(new ParameterizedThreadStart(Road)); //creating threads
                     t.Name = best10[i - 1].ToString();
-                    t.Start(i);
+                    t.Start(i); //starting threads
                 }
             }
 
         }
 
-
+         /// <summary>
+        /// Random routes that are written to the file
+        /// </summary>
         public static void Route()
         {
 
@@ -70,7 +71,9 @@ namespace Zadatak_1
             sw.Close();
         }
 
-
+        /// <summary>
+        /// Method for filtering the best routes
+        /// </summary>
         public static void BestRoute()
         {
             lock (l)
@@ -98,6 +101,7 @@ namespace Zadatak_1
                 {
                     best10.Add(best.ElementAt(i));
                 }
+                Console.WriteLine("The best routes are chosen.");
                 foreach (var item in best10)
                 {
                     Console.WriteLine(item);
@@ -107,7 +111,10 @@ namespace Zadatak_1
             }
         }
 
-
+        /// <summary>
+        /// Truck loading method
+        /// </summary>
+        /// <param name="o"></param>
         public static void Loading(object o)
         {
 
@@ -116,18 +123,17 @@ namespace Zadatak_1
             Manager.WaitOne();
             stopwatch.Start();
             Console.WriteLine("The truck {0} is loading", o);
-
             Thread.Sleep(random.Next(500, 5000));
             Console.WriteLine("The truck {0} finished loading. Loading time: {1:N} seconds", o, stopwatch.Elapsed.TotalSeconds);
             stopwatch.Reset();
             Manager.Release(1);
+
             if ((int)o == 10)
             {
                 lock (l)
                 {
                     Console.WriteLine("Loading is complete.");
-
-                    Thread.Sleep(random.Next(500, 5000));
+                    Thread.Sleep(500);
                     Monitor.Pulse(l);
 
                 }
@@ -135,7 +141,10 @@ namespace Zadatak_1
 
         }
 
-
+        /// <summary>
+        /// Method for a truck to travel to a specific route
+        /// </summary>
+        /// <param name="n"></param>
         public static void Road(object n)
         {
 
@@ -144,9 +153,10 @@ namespace Zadatak_1
 
             Driver.WaitOne();
             stopwatch.Start();
-            rnd = random.Next(500, 5001);
-            Driver.Release();
-            if (rnd > 3000)
+            int rnd = random.Next(500, 5001);
+            Driver.Release(1);
+
+            if (rnd > 3000) 
             {
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} did not cross the route: {1} on time.",
@@ -161,10 +171,13 @@ namespace Zadatak_1
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} finishes road to route: {1}. Road time: {2:N} seconds.",
                     n, Thread.CurrentThread.Name, stopwatch.Elapsed.TotalSeconds);
-
+                
                 stopwatch.Reset();
             }
+            
         }
+
+        
 
 
         static void Main(string[] args)
@@ -173,7 +186,7 @@ namespace Zadatak_1
             route.Start();//thread start
             route.Join();
 
-            Console.WriteLine("The best routes are chosen.");
+            
             Thread best = new Thread(BestRoute);//Creatig thread
             best.Start();//thread start
             best.Join();
@@ -181,7 +194,7 @@ namespace Zadatak_1
             Manager = new Semaphore(2, 2);
             LoadingTrucks();
 
-            Driver = new Semaphore(1, 10);
+            Driver = new Semaphore(10,10);
             RoadTrucks();
 
             Console.ReadLine();
