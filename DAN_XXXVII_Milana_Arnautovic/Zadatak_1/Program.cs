@@ -133,7 +133,6 @@ namespace Zadatak_1
                 lock (l)
                 {
                     Console.WriteLine("Loading is complete.");
-                    Thread.Sleep(1000);
                     Monitor.Pulse(l);
 
                 }
@@ -152,7 +151,6 @@ namespace Zadatak_1
             Console.WriteLine("Truck {0} going to the route: {1}.", n, Thread.CurrentThread.Name);
 
             Driver.WaitOne();
-            stopwatch.Start();
             int rnd = random.Next(500, 5001);
             Driver.Release(1);
 
@@ -161,18 +159,20 @@ namespace Zadatak_1
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} did not cross the route: {1} on time. Order canceled.",
                     n, Thread.CurrentThread.Name);
+                stopwatch.Start();
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} returning from failed road route: {2}. Road time: {1:N} seconds.",
                     n, stopwatch.Elapsed.TotalSeconds, Thread.CurrentThread.Name);
-                stopwatch.Reset();
+                stopwatch.Stop();
             }
             else
             {
+                stopwatch.Start();
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} finishes road to route: {1}. Road time: {2:N} seconds.",
                     n, Thread.CurrentThread.Name, stopwatch.Elapsed.TotalSeconds);
 
-                stopwatch.Reset();
+                stopwatch.Stop();
             }
 
         }
