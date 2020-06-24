@@ -19,7 +19,7 @@ namespace Zadatak_1
         static List<int> best = new List<int>();
         static List<int> best10 = new List<int>();
 
-        
+
         public static void LoadingTrucks()
 
         {
@@ -50,7 +50,7 @@ namespace Zadatak_1
 
         }
 
-         /// <summary>
+        /// <summary>
         /// Random routes that are written to the file
         /// </summary>
         public static void Route()
@@ -106,7 +106,7 @@ namespace Zadatak_1
                 {
                     Console.WriteLine(item);
                 }
-               
+
                 Monitor.Pulse(l);
             }
         }
@@ -133,7 +133,7 @@ namespace Zadatak_1
                 lock (l)
                 {
                     Console.WriteLine("Loading is complete.");
-                    Thread.Sleep(500);
+                    Thread.Sleep(1000);
                     Monitor.Pulse(l);
 
                 }
@@ -156,10 +156,10 @@ namespace Zadatak_1
             int rnd = random.Next(500, 5001);
             Driver.Release(1);
 
-            if (rnd > 3000) 
+            if (rnd > 3000)
             {
                 Thread.Sleep(rnd);
-                Console.WriteLine("Truck {0} did not cross the route: {1} on time.",
+                Console.WriteLine("Truck {0} did not cross the route: {1} on time. Order canceled.",
                     n, Thread.CurrentThread.Name);
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} returning from failed road route: {2}. Road time: {1:N} seconds.",
@@ -171,13 +171,13 @@ namespace Zadatak_1
                 Thread.Sleep(rnd);
                 Console.WriteLine("Truck {0} finishes road to route: {1}. Road time: {2:N} seconds.",
                     n, Thread.CurrentThread.Name, stopwatch.Elapsed.TotalSeconds);
-                
+
                 stopwatch.Reset();
             }
-            
+
         }
 
-        
+
 
 
         static void Main(string[] args)
@@ -186,15 +186,15 @@ namespace Zadatak_1
             route.Start();//thread start
             route.Join();
 
-            
+
             Thread best = new Thread(BestRoute);//Creatig thread
             best.Start();//thread start
             best.Join();
-           
+
             Manager = new Semaphore(2, 2);
             LoadingTrucks();
 
-            Driver = new Semaphore(10,10);
+            Driver = new Semaphore(10, 10);
             RoadTrucks();
 
             Console.ReadLine();
